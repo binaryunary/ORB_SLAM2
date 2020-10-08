@@ -38,22 +38,6 @@ namespace ORB_SLAM2
                    const bool bUseViewer) : mSensor(sensor), mpViewer(static_cast<Viewer *>(NULL)), mbReset(false), mbActivateLocalizationMode(false),
                                             mbDeactivateLocalizationMode(false)
     {
-        // Output welcome message
-        cout << endl
-             << "ORB-SLAM2 Copyright (C) 2014-2016 Raul Mur-Artal, University of Zaragoza." << endl
-             << "This program comes with ABSOLUTELY NO WARRANTY;" << endl
-             << "This is free software, and you are welcome to redistribute it" << endl
-             << "under certain conditions. See LICENSE.txt." << endl
-             << endl;
-
-        cout << "Input sensor was set to: ";
-
-        if (mSensor == MONOCULAR)
-            cout << "Monocular" << endl;
-        else if (mSensor == STEREO)
-            cout << "Stereo" << endl;
-        else if (mSensor == RGBD)
-            cout << "RGB-D" << endl;
 
         //Check settings file
         cv::FileStorage fsSettings(strSettingsFile.c_str(), cv::FileStorage::READ);
@@ -64,8 +48,7 @@ namespace ORB_SLAM2
         }
 
         //Load ORB Vocabulary
-        cout << endl
-             << "Loading ORB Vocabulary. This could take a while..." << endl;
+
         clock_t tStart = clock();
         mpVocabulary = new ORBVocabulary();
         bool bVocLoad = false; // chose loading method based on file extension
@@ -79,7 +62,6 @@ namespace ORB_SLAM2
             cerr << "Failed to open at: " << strVocFile << endl;
             exit(-1);
         }
-        printf("Vocabulary loaded in %.2fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
 
         //Create KeyFrame Database
         mpKeyFrameDatabase = new KeyFrameDatabase(*mpVocabulary);
@@ -331,8 +313,7 @@ namespace ORB_SLAM2
 
     void System::SaveTrajectoryTUM(const string &filename)
     {
-        cout << endl
-             << "Saving camera trajectory to " << filename << " ..." << endl;
+
         if (mSensor == MONOCULAR)
         {
             cerr << "ERROR: SaveTrajectoryTUM cannot be used for monocular." << endl;
@@ -388,14 +369,10 @@ namespace ORB_SLAM2
             f << setprecision(6) << *lT << " " << setprecision(9) << twc.at<float>(0) << " " << twc.at<float>(1) << " " << twc.at<float>(2) << " " << q[0] << " " << q[1] << " " << q[2] << " " << q[3] << endl;
         }
         f.close();
-        cout << endl
-             << "trajectory saved!" << endl;
     }
 
     void System::SaveKeyFrameTrajectoryTUM(const string &filename)
     {
-        cout << endl
-             << "Saving keyframe trajectory to " << filename << " ..." << endl;
 
         vector<KeyFrame *> vpKFs = mpMap->GetAllKeyFrames();
         sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
@@ -425,14 +402,11 @@ namespace ORB_SLAM2
         }
 
         f.close();
-        cout << endl
-             << "trajectory saved!" << endl;
     }
 
     void System::SaveTrajectoryKITTI(const string &filename)
     {
-        cout << endl
-             << "Saving camera trajectory to " << filename << " ..." << endl;
+
         if (mSensor == MONOCULAR)
         {
             cerr << "ERROR: SaveTrajectoryKITTI cannot be used for monocular." << endl;
@@ -480,8 +454,6 @@ namespace ORB_SLAM2
             f << setprecision(9) << Rwc.at<float>(0, 0) << " " << Rwc.at<float>(0, 1) << " " << Rwc.at<float>(0, 2) << " " << twc.at<float>(0) << " " << Rwc.at<float>(1, 0) << " " << Rwc.at<float>(1, 1) << " " << Rwc.at<float>(1, 2) << " " << twc.at<float>(1) << " " << Rwc.at<float>(2, 0) << " " << Rwc.at<float>(2, 1) << " " << Rwc.at<float>(2, 2) << " " << twc.at<float>(2) << endl;
         }
         f.close();
-        cout << endl
-             << "trajectory saved!" << endl;
     }
 
     int System::GetTrackingState()
