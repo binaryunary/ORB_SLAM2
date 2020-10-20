@@ -3,7 +3,7 @@
 ## OrbVoc Binary
 
 providing the binary version of Orbvoc.txt can increase the startup of the application.
-example of usage on Examples/Monocular/mono_kitty
+example of usage on Examples/Monocular/mono_kitti
 
 ```
 ./Examples/Monocular/mono_kitti Vocabulary/ORBvoc.bin Examples/Monocular/KITTIX.yaml PATH_TO_DATASET_FOLDER/dataset/sequences/SEQUENCE_NUMBER
